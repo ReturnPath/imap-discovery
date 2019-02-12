@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	discovery "github.com/ReturnPath/contextio-discovery/src"
+)
 
 func main() {
-	fmt.Println("Init!")
+	email := "aaron@yahoo.com"
+	config, err := discovery.DiscoverImapConfig(email)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(config)
 }
