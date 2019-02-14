@@ -1,4 +1,4 @@
-package configs
+package discovery
 
 import (
 	"encoding/xml"

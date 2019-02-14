@@ -1,4 +1,4 @@
-package configs
+package discovery
 
 // Basic configs for known domains
 

@@ -1,4 +1,4 @@
-package configs
+package discovery
 
 const (
 	// ProviderGeneric is for generic IMAP providers

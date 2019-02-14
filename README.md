@@ -1,3 +1,3 @@
-# Context.IO IMAP Discovery
+# IMAP Discovery
 
 A library to help 'discover' IMAP connection parameters.

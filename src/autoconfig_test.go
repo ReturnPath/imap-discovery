@@ -1,4 +1,4 @@
-package configs
+package discovery
 
 import (
 	"io/ioutil"
@@ -9,8 +9,6 @@ import (
 
 // Tests the mozilla autoconfig function + parsing
 func TestGetMozillaAutoConfig(t *testing.T) {
-
-
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -49,8 +47,6 @@ func TestGetMozillaAutoConfig(t *testing.T) {
 // Tests the domain autodiscover function + parsing
 func TestGetAutoDiscover(t *testing.T) {
 
-
-
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -84,8 +80,6 @@ func TestGetAutoDiscover(t *testing.T) {
 // Tests the autoconfig function with no domain - should fail
 func TestGetAutoConfigNoDomain(t *testing.T) {
 
-
-
 	_, err := GetAutoConfig("", "", "")
 	if err == nil {
 		t.Error("no domain, should have errored")
@@ -94,8 +88,6 @@ func TestGetAutoConfigNoDomain(t *testing.T) {
 
 // Tests the autoconfig function with a non-200 returned - should fail
 func TestGetAutoConfigNon200(t *testing.T) {
-
-
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -119,8 +111,6 @@ func TestGetAutoConfigNon200(t *testing.T) {
 // Tests the autoconfig function with an empty - should fail
 func TesGetAutoConfigEmptyBody(t *testing.T) {
 
-
-
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -142,8 +132,6 @@ func TesGetAutoConfigEmptyBody(t *testing.T) {
 
 // Tests the autoconfig function with no imap incomingServer - should fail
 func TestGetAutoConfigNoImapServer(t *testing.T) {
-
-
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -170,8 +158,6 @@ func TestGetAutoConfigNoImapServer(t *testing.T) {
 // Tests the autoconfig function with an unsupported xml response format - should fail
 func TestGetAutoConfigUnsupportedFormat(t *testing.T) {
 
-
-
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -193,8 +179,6 @@ func TestGetAutoConfigUnsupportedFormat(t *testing.T) {
 
 // Tests the autoconfig function with a broken xml response - should fail
 func TestGetAutoConfigMalformedBody(t *testing.T) {
-
-
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()

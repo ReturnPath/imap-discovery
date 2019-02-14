@@ -3,14 +3,12 @@ package discovery
 import (
 	"errors"
 	"strings"
-
-	"github.com/ReturnPath/imap-discovery/src/configs"
 )
 
 // DiscoverImapConfig is the library entrypoint!
 // The options that are more likely to succeed are tried first.
 // In order: Known Domain Configs, Domain Autoconfig endpoints, Mozilla Autoconfig information, and finally MX records for the domain itself
-func DiscoverImapConfig(email string) (*configs.Config, error) {
+func DiscoverImapConfig(email string) (*Config, error) {
 
 	// split email into username and domain
 	emailParts := strings.Split(email, "@")
@@ -22,25 +20,25 @@ func DiscoverImapConfig(email string) (*configs.Config, error) {
 	domain := emailParts[1]
 
 	// check known domains
-	config, err := configs.GetKnownDomainConfig(username, domain)
+	config, err := GetKnownDomainConfig(username, domain)
 	if err == nil {
 		return config, nil
 	}
 
 	// check for autoconfig from the domain
-	config, err = configs.GetDomainAutoConfig(username, domain)
+	config, err = GetDomainAutoConfig(username, domain)
 	if err == nil {
 		return config, nil
 	}
 
 	// check mozilla's config
-	config, err = configs.GetMozillaAutoConfig(username, domain)
+	config, err = GetMozillaAutoConfig(username, domain)
 	if err == nil {
 		return config, nil
 	}
 
 	// check the MX records for the domain
-	config, err = configs.GetMXRecord(domain, email)
+	config, err = GetMXRecord(domain, email)
 	if err == nil {
 		return config, nil
 	}
@@ -50,7 +48,7 @@ func DiscoverImapConfig(email string) (*configs.Config, error) {
 }
 
 // DiscoverAllImapConfigs is an option that tries all of the approaches, returning a list of all successful discoveries.
-func DiscoverAllImapConfigs(email string) (*[]configs.Config, error) {
+func DiscoverAllImapConfigs(email string) (*[]Config, error) {
 
 	// split email into username and domain
 	emailParts := strings.Split(email, "@")
@@ -61,28 +59,28 @@ func DiscoverAllImapConfigs(email string) (*[]configs.Config, error) {
 	username := emailParts[0]
 	domain := emailParts[1]
 
-	results := []configs.Config{}
+	results := []Config{}
 
 	// check known domains
-	config, err := configs.GetKnownDomainConfig(username, domain)
+	config, err := GetKnownDomainConfig(username, domain)
 	if err != nil {
 		results = append(results, *config)
 	}
 
 	// check for autoconfig from the domain
-	config, err = configs.GetDomainAutoConfig(username, domain)
+	config, err = GetDomainAutoConfig(username, domain)
 	if err != nil {
 		results = append(results, *config)
 	}
 
 	// check mozilla's config
-	config, err = configs.GetMozillaAutoConfig(username, domain)
+	config, err = GetMozillaAutoConfig(username, domain)
 	if err != nil {
 		results = append(results, *config)
 	}
 
 	// check the MX records for the domain
-	config, err = configs.GetMXRecord(domain, email)
+	config, err = GetMXRecord(domain, email)
 	if err != nil {
 		results = append(results, *config)
 	}
