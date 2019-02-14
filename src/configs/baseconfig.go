@@ -88,7 +88,7 @@ var microsoftBaseConfig = Config{
 }
 
 // ShortmailBaseConfig is the known base config for shortmail
-var ShortmailBaseConfig = Config{
+var shortmailBaseConfig = Config{
 	Provider: ProviderGeneric,
 	Server:   "imap.shortmail.com",
 	OAuth:    false,

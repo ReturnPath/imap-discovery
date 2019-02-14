@@ -172,7 +172,7 @@ var knownDomains = map[string]*Config{
 	"windowslive.es":    &microsoftBaseConfig,
 
 	// Shortmail
-	"shortmail.com": &ShortmailBaseConfig,
+	"shortmail.com": &shortmailBaseConfig,
 
 	// Yahoo
 	"yahoo.com":      &yahooBaseConfig,

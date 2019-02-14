@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/ReturnPath/contextio-discovery/src/configs"
+	"github.com/ReturnPath/imap-discovery/src/configs"
 )
 
 // DiscoverImapConfig is the library entrypoint!
@@ -47,4 +47,45 @@ func DiscoverImapConfig(email string) (*configs.Config, error) {
 
 	// No results :(
 	return nil, errors.New("unable to discover configuration")
+}
+
+// DiscoverAllImapConfigs is an option that tries all of the approaches, returning a list of all successful discoveries.
+func DiscoverAllImapConfigs(email string) (*[]configs.Config, error) {
+
+	// split email into username and domain
+	emailParts := strings.Split(email, "@")
+	if len(emailParts) != 2 {
+		return nil, errors.New("invalid email address")
+	}
+
+	username := emailParts[0]
+	domain := emailParts[1]
+
+	results := []configs.Config{}
+
+	// check known domains
+	config, err := configs.GetKnownDomainConfig(username, domain)
+	if err != nil {
+		results = append(results, *config)
+	}
+
+	// check for autoconfig from the domain
+	config, err = configs.GetDomainAutoConfig(username, domain)
+	if err != nil {
+		results = append(results, *config)
+	}
+
+	// check mozilla's config
+	config, err = configs.GetMozillaAutoConfig(username, domain)
+	if err != nil {
+		results = append(results, *config)
+	}
+
+	// check the MX records for the domain
+	config, err = configs.GetMXRecord(domain, email)
+	if err != nil {
+		results = append(results, *config)
+	}
+
+	return &results, nil
 }
