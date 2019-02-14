@@ -19,20 +19,20 @@ const (
 
 // Config represents the IMAP Config response from this service
 type Config struct {
-	Email         string
-	Username      string
-	Provider      string
-	Server        string
-	Port          int
-	SSL           bool
-	OAuth         bool
-	Documentation []ImapDocumentation
+	Email         string              `json:"email"`
+	Username      string              `json:"username"`
+	Provider      string              `json:"provider"`
+	Server        string              `json:"server"`
+	Port          int                 `json:"port"`
+	SSL           bool                `json:"ssl"`
+	OAuth         bool                `json:"oauth"`
+	Documentation []ImapDocumentation `json:"documentation"`
 }
 
 // ImapDocumentation represents provided documentation
 type ImapDocumentation struct {
-	URL         string
-	Description string
+	URL         string `json:"url"`
+	Description string `json:"description"`
 }
 
 // Structs for the XML responses from autoconfig endpoints
