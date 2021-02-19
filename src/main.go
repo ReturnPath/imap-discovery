@@ -63,26 +63,30 @@ func DiscoverAllImapConfigs(email string) (*[]Config, error) {
 
 	// check known domains
 	config, err := GetKnownDomainConfig(username, domain)
-	if err != nil {
+	if err == nil {
 		results = append(results, *config)
 	}
 
 	// check for autoconfig from the domain
 	config, err = GetDomainAutoConfig(username, domain)
-	if err != nil {
+	if err == nil {
 		results = append(results, *config)
 	}
 
 	// check mozilla's config
 	config, err = GetMozillaAutoConfig(username, domain)
-	if err != nil {
+	if err == nil {
 		results = append(results, *config)
 	}
 
 	// check the MX records for the domain
 	config, err = GetMXRecord(domain, email)
-	if err != nil {
+	if err == nil {
 		results = append(results, *config)
+	}
+
+	if len(results) == 0 {
+		return nil, errors.New("no results found")
 	}
 
 	return &results, nil
